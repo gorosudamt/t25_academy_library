@@ -24,28 +24,22 @@ public class BookMstService {
 
     private final BookMstRepository bookMstRepository;
 
-    
-    
     @Autowired
-    public BookMstService(BookMstRepository bookMstRepository){
+    public BookMstService(BookMstRepository bookMstRepository) {
         this.bookMstRepository = bookMstRepository;
     }
 
-    
-     //public BookMstService BookMstService(String isbn) throws BookMstRepository{
-        // BookMst bookpBookMst = this.bookMstRepository.selectByIsbn(isbn);
-        
-        public List<BookMst> selectByIsbn(String isbn) {
-            return this.bookMstRepository.findByIsbn(isbn);
-        }
-        
+    // public BookMstService BookMstService(String isbn) throws BookMstRepository{
+    // BookMst bookpBookMst = this.bookMstRepository.selectByIsbn(isbn);
 
-    public BookMst selectByTitle(String title) {
-    return this.bookMstRepository.selectByTitle(title).orElse(null);
+    public List<BookMst> selectByIsbn(String isbn) {
+        return this.bookMstRepository.findByIsbn(isbn);
     }
 
+    //public BookMst selectByTitle(String title) {
+      //  return this.bookMstRepository.selectByTitle(title).orElse(null);
+    //}
 
-    
     public List<BookMstDto> findAvailableWithStockCount() {
         List<BookMst> books = this.bookMstRepository.findLimitedBook();
         List<BookMstDto> bookMstDtoList = new ArrayList<BookMstDto>();
@@ -64,24 +58,17 @@ public class BookMstService {
         return bookMstDtoList;
     }
 
-   
-     @Transactional
+    @Transactional
     public void save(BookMst bookMstDto) {
-      
-            BookMst bookMst= new BookMst();
 
-            bookMst.setTitle(bookMstDto.getTitle());
-            bookMst.setIsbn(bookMstDto.getIsbn());
+        BookMst bookMst = new BookMst();
 
-            
-            // データベースへの保存
-            this.bookMstRepository.save(bookMst);
-        
+        bookMst.setTitle(bookMstDto.getTitle());
+        bookMst.setIsbn(bookMstDto.getIsbn());
+
+        // データベースへの保存
+        this.bookMstRepository.save(bookMst);
+
     }
 
-    
 }
-
-
-
-
